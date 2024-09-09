@@ -5,7 +5,7 @@ const buildingElement = document.getElementById('building');
 const startButton = document.getElementById('startSimulation');
 const numFloorsInput = document.getElementById('numFloors');
 const numLiftsInput = document.getElementById('numLifts')
-console.log('numLiftsInput', parseInt(numLiftsInput.value));
+// console.log('numLiftsInput', parseInt(numLiftsInput.value));
 
 
 const lifts = [];
@@ -88,18 +88,6 @@ startButton.addEventListener('click', () => {
             downButton.textContent = 'Down';
             downButton.addEventListener('click', () => handleLiftRequest(i, 'down'));
 
-            // if (i === numFloors) {
-            //     floor.appendChild(floorNumber);
-            //     floor.appendChild(downButton);
-            // } else if (i === 1) {
-            //     floor.appendChild(floorNumber);
-            //     floor.appendChild(upButton)
-            // } else {
-            //     floor.appendChild(floorNumber)
-            //     floor.appendChild(upButton);
-            //     floor.appendChild(downButton);
-            //     floor.appendChild(buttonGroup)
-            // }
 
             if (i === numFloors) {
                 floor.appendChild(floorNumber);

@@ -94,3 +94,62 @@ document.addEventListener("DOMContentLoaded", () => {
     speak("Lift doors are closing")
   }
 });
+
+
+
+
+/* Mobile-friendly adjustments */
+@media screen and (max-width: 480px) {
+  .building {
+      max-width: 100%;
+      padding: 0 10px;
+  }
+
+  .floor {
+      height: 120px; /* Increased height for all floors */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+
+  .floor:first-child {
+      height: 150px; /* Bigger height for the first floor */
+  }
+
+  .lift1, .lift2, .lift3, .lift4 {
+      width: 50px; /* Adjusted width */
+      height: 110px; /* Adjusted height */
+      margin-right: 10px; /* Push lifts to the right */
+  }
+
+  .buttonGroup {
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      height: 100%;
+  }
+
+  .upButton, .downButton {
+      margin: 2px 0;
+      padding: 5px 10px;
+      font-size: 12px;
+      width: 60px; /* Make buttons smaller */
+  }
+
+  .floorNumber {
+      font-size: 12px;
+      position: absolute;
+      left: 10px;
+  }
+
+  .inputs {
+      padding: 10px;
+  }
+
+  .inputs input, .inputs button {
+      margin: 5px 0;
+      width: 100%;
+      max-width: 100%;
+      font-size: 14px;
+  }
+}

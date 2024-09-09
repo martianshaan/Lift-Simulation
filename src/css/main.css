@@ -2,6 +2,10 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
     height: 100vh;
+    /* background-color: #f4f4f4;
+    background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23f5ab7a' fill-opacity='0.63'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); */
+    background-color: #f8f8f8;
+    background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23ff90e8' fill-opacity='0.27'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 * {
@@ -72,6 +76,7 @@ letter-spacing: .1rem;
     display: grid;
     place-items: center;
     min-height: 100vh;
+   
 }
 
 .building {
@@ -80,7 +85,7 @@ letter-spacing: .1rem;
     --building-width:100%;
     --building-height:600px;
     width: var(--building-width);
-    height: var(--building-height);
+    /* height: var(--building-height); */
     position: relative;
     /* box-shadow: 0 0 20px rgba(209, 137, 137, 0.1); */
     
@@ -282,5 +287,59 @@ letter-spacing: .1rem;
         margin: 5px 0;
         width: 100%;
         max-width: 200px;
+    }
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .building {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .floor {
+        height: 80px;
+    }
+
+    .lift{
+        width: 50px;
+        height: 75px;
+        margin-left: 50px;
+        left: var(--lift-position);
+    }
+    /* .lift1, .lift2, .lift3, .lift4 {
+        width: 60px;
+        height: 75px;
+    } */
+
+    .buttonGroup {
+        position: absolute;
+        left: 10px;
+        top:10px;
+    }
+
+    .upButton, .downButton {
+        margin: 2px;
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .floorNumber {
+        font-size: 12px;
+        position: absolute;
+        left: 10px;
+        top:10px;
+    }
+
+    .inputs {
+        padding: 10px;
+    }
+
+    .inputs input, .inputs button {
+        margin: 5px 0;
+        width: 100%;
+        max-width: 100%;
+        font-size: 14px;
     }
 }
