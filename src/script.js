@@ -5,7 +5,7 @@ const buildingElement = document.getElementById('building');
 const startButton = document.getElementById('startSimulation');
 const numFloorsInput = document.getElementById('numFloors');
 const numLiftsInput = document.getElementById('numLifts')
-console.log('numLiftsInput', parseInt(numLiftsInput.value));
+
 
 
 const lifts = [];
@@ -22,10 +22,6 @@ startButton.addEventListener('click', () => {
 
     if (!numFloors && !numLifts) {
         alert('Please enter correct number to generate Floors and Lifts')
-    } else if (numFloors > 15) {
-        alert('Please enter floor number in range 1-15')
-    } else if (numLifts > 4) {
-        alert('Maximum Lifts allowed is 4 ')
     } else if (numFloors <= 0 || numLifts <= 0) {
         alert('Only positive values are allowed')
     }
@@ -43,7 +39,6 @@ startButton.addEventListener('click', () => {
     function initializeLifts(numLifts, numFloors) {
         isLiftMoving = new Array(numLifts).fill(false);
 
-        //lifts=[];
         console.log('lifts', lifts);
         console.log('numLifts', numLifts);
 
@@ -81,25 +76,13 @@ startButton.addEventListener('click', () => {
             const upButton = document.createElement('button');
             upButton.classList.add('upButton');
             upButton.textContent = 'Up';
-            upButton.addEventListener('click', () => handleLiftRequest(i, 'up'));
+            upButton.addEventListener('click', (event) => handleLiftRequest(i, 'up'));
 
             const downButton = document.createElement('button');
             downButton.classList.add('downButton');
             downButton.textContent = 'Down';
-            downButton.addEventListener('click', () => handleLiftRequest(i, 'down'));
+            downButton.addEventListener('click', (event) => handleLiftRequest(i, 'down'));
 
-            // if (i === numFloors) {
-            //     floor.appendChild(floorNumber);
-            //     floor.appendChild(downButton);
-            // } else if (i === 1) {
-            //     floor.appendChild(floorNumber);
-            //     floor.appendChild(upButton)
-            // } else {
-            //     floor.appendChild(floorNumber)
-            //     floor.appendChild(upButton);
-            //     floor.appendChild(downButton);
-            //     floor.appendChild(buttonGroup)
-            // }
 
             if (i === numFloors) {
                 floor.appendChild(floorNumber);
@@ -142,6 +125,15 @@ startButton.addEventListener('click', () => {
 
 
     function handleLiftRequest(targetFloor, direction) {
+
+        const liftButton = event.target;
+        if (liftButton.disabled) return;
+        liftButton.disabled = true;
+        setTimeout(() => {
+            liftButton.disabled = false;
+        }, 2000);
+
+
         let selectedLift = null;
         let minDistance = Infinity;
 
@@ -185,7 +177,7 @@ startButton.addEventListener('click', () => {
         setTimeout(() => {
             closeLiftDoors(lift);
             isLiftMoving[liftIndex] = false;
-        }, duration * 1000 );
+        }, duration * 1000);
 
         setTimeout(() => {
             lift.children[0].style.transform = "translateX(-100%)";
@@ -210,12 +202,12 @@ startButton.addEventListener('click', () => {
         const leftDoor = lift.querySelector('.left-door');
         const rightDoor = lift.querySelector('.right-door');
 
-        
-    leftDoor.style.transition = 'transform 2.5s ease-in-out';
-    rightDoor.style.transition = 'transform 2.5s ease-in-out';
 
-    leftDoor.style.transform = 'translateX(-100%)';
-    rightDoor.style.transform = 'translateX(100%)';
+        leftDoor.style.transition = 'transform 2.5s ease-in-out';
+        rightDoor.style.transition = 'transform 2.5s ease-in-out';
+
+        leftDoor.style.transform = 'translateX(-100%)';
+        rightDoor.style.transform = 'translateX(100%)';
 
         leftDoor.classList.add('open-left');
         rightDoor.classList.add('open-right');
