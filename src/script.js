@@ -5,7 +5,7 @@ const buildingElement = document.getElementById('building');
 const startButton = document.getElementById('startSimulation');
 const numFloorsInput = document.getElementById('numFloors');
 const numLiftsInput = document.getElementById('numLifts')
-
+// 
 
 
 const lifts = [];
