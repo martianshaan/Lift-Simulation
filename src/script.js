@@ -12,6 +12,8 @@ const lifts = [];
 let isLiftMoving = [];
 let prevFloor = 0;
 
+const maxLiftsPerFloor = 2;
+const liftsPerFloor = {};
 
 const buttons = document.querySelectorAll("button");
 
@@ -107,7 +109,6 @@ startButton.addEventListener('click', () => {
         // buildingWidth = 100; // base width + width for each lift
         const buildingHeight = numFloors * floorHeight;
 
-        // building.style.setProperty('--building-width', `${buildingWidth}px`);
         building.style.setProperty('--building-height', `${buildingHeight}px`);
     }
 
@@ -125,14 +126,22 @@ startButton.addEventListener('click', () => {
 
 
     function handleLiftRequest(targetFloor, direction) {
+        const liftbutton = event.target;
+        if (liftbutton.disabled) return;
 
-        const liftButton = event.target;
-        if (liftButton.disabled) return;
-        liftButton.disabled = true;
+        liftbutton.disabled = true;
         setTimeout(() => {
-            liftButton.disabled = false;
+            liftbutton.disabled = false;
         }, 2000);
 
+        // Initializing the count of lifts going to this floor
+        liftsPerFloor[targetFloor] = (liftsPerFloor[targetFloor] || 0) + 1;
+
+        if (liftsPerFloor[targetFloor] > maxLiftsPerFloor) {
+            console.log(`Already ${maxLiftsPerFloor} lifts heading to floor ${targetFloor}`);
+            liftsPerFloor[targetFloor]--;
+            return;
+        }
 
         let selectedLift = null;
         let minDistance = Infinity;
@@ -144,15 +153,16 @@ startButton.addEventListener('click', () => {
 
                 if (distance < minDistance) {
                     minDistance = distance;
-                    selectedLift = index
+                    selectedLift = index;
                 }
             }
         });
 
         if (selectedLift != null) {
-            moveLiftToNextFloor(selectedLift, targetFloor)
+            moveLiftToNextFloor(selectedLift, targetFloor);
         } else {
             console.log('All lifts are currently busy');
+            liftsPerFloor[targetFloor]--;
         }
     }
 
@@ -193,6 +203,8 @@ startButton.addEventListener('click', () => {
         setTimeout(() => {
             lift.classList.remove("engaged");
             isLiftMoving[liftIndex] = false;
+            // Decrement the count of lifts for this floor when the lift arrives
+            liftsPerFloor[selectedFloor]--;
         }, duration * 1000 + 5000);
 
 
