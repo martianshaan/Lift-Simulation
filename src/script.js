@@ -5,8 +5,6 @@ const buildingElement = document.getElementById('building');
 const startButton = document.getElementById('startSimulation');
 const numFloorsInput = document.getElementById('numFloors');
 const numLiftsInput = document.getElementById('numLifts')
-// 
-
 
 const lifts = [];
 let isLiftMoving = [];
@@ -53,16 +51,18 @@ startButton.addEventListener('click', () => {
             <div class="door right-door"></div>
             `;
 
-            lift.setAttribute('data-floor', 1);
-            lift.dataset.currentLocation = 1;
+            lift.setAttribute('data-floor', 0);
+            lift.dataset.currentLocation = 0;
             lifts.push(lift);
             buildingElement.appendChild(lift);
 
+            lift.style.left = `${i * (160) + 100}px`;
+            lift.style.transform = 'translateY(0)';  // Set initial position to ground 
         }
     }
 
     function createBuilding(numFloors) {
-        for (let i = numFloors; i >= 1; i--) {
+        for (let i = numFloors - 1; i >= 0; i--) {
             const floor = document.createElement('div');
             floor.classList.add('floor');
             floor.id = `floor${i}`;
@@ -86,10 +86,10 @@ startButton.addEventListener('click', () => {
             downButton.addEventListener('click', (event) => handleLiftRequest(i, 'down'));
 
 
-            if (i === numFloors) {
+            if (i === numFloors - 1) {
                 floor.appendChild(floorNumber);
                 floor.appendChild(downButton);
-            } else if (i === 1) {
+            } else if (i === 0) {
                 floor.appendChild(floorNumber);
                 floor.appendChild(upButton);
             } else {
@@ -99,24 +99,35 @@ startButton.addEventListener('click', () => {
                 floor.appendChild(buttonGroup);
             }
 
-            buildingElement.appendChild(floor);
+            buildingElement.appendChild(floor)
+
         }
     }
 
     function updateBuildingSize(numFloors, numLifts) {
         const building = document.querySelector('.building');
-        const floorHeight = 150; // eqaul to height of each floor
-        // buildingWidth = 100; // base width + width for each lift
+        const floorHeight = 150; // equal to height of each floor
+        const liftWidth = 120; // width of each lift
+        const spacing = 60; // spacing between lifts
         const buildingHeight = numFloors * floorHeight;
-
+        let buildingWidth = 0;
+        if (numLifts < 7) {
+            buildingWidth = 1215
+            console.log('width', buildingWidth);
+        } else {
+            buildingWidth = (liftWidth + spacing) * (numLifts - 1) + spacing;
+            console.log('width', buildingWidth);
+        }
         building.style.setProperty('--building-height', `${buildingHeight}px`);
+        building.style.setProperty('--building-width', `${buildingWidth}px`);
+        building.style.width = `${buildingWidth}px`; // Set the width 
     }
 
     function positionLifts(numLifts) {
         const lifts = document.querySelectorAll('.lift');
         const buildingWidth = parseInt(getComputedStyle(document.querySelector('.building')).width);
         const liftWidth = 120; // width of each lift
-        const spacing = (buildingWidth - (numLifts * liftWidth)) / (numLifts + 1);
+        const spacing = 40; // consistent with updateBuildingSize
 
         lifts.forEach((lift, index) => {
             const position = spacing + (index * (liftWidth + spacing));
@@ -176,7 +187,7 @@ startButton.addEventListener('click', () => {
         isLiftMoving[liftIndex] = true;
 
         lift.style.transition = `transform ${duration}s ease-in-out`;
-        lift.style.transform = `translateY(-${(selectedFloor - 1) * 150}px)`;
+        lift.style.transform = `translateY(-${selectedFloor * 150}px)`;
         lift.setAttribute('data-floor', selectedFloor);
         lift.classList.add("engaged");
 
@@ -225,7 +236,7 @@ startButton.addEventListener('click', () => {
         rightDoor.classList.add('open-right');
 
         console.log('Lift doors open');
-        speak('Lift doors are opening');
+
     }
 
     function closeLiftDoors(lift) {
@@ -239,12 +250,7 @@ startButton.addEventListener('click', () => {
         rightDoor.classList.remove('open-right');
 
         console.log('Lift doors close');
-        speak('Lift doors are closing');
-    }
 
-    // function speak(text) {
-    //     const utterance = new SpeechSynthesisUtterance(text);
-    //     speechSynthesis.speak(utterance);
-    // }
+    }
 
 })

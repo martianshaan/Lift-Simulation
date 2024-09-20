@@ -79,13 +79,19 @@ letter-spacing: .1rem;
    
 }
 
+
+/* @media (max-width: 768px) {
+    .building {
+        --lift-width: 80px;
+        --lift-margin: 20px;
+    }
+} */
+
 .building {
     background-color: #fff;
     border: 2px solid #333;
-    --building-width:100%;
-    --building-height:600px;
-    width: var(--building-width);
-    /* height: var(--building-height); */
+    width: var(--building-width, 100%);
+    /* height: var(--building-height, 600px); */
     position: relative;
     /* box-shadow: 0 0 20px rgba(209, 137, 137, 0.1); */
     
