@@ -19,15 +19,25 @@ let liftQueues = [];
 let liftsPerFloor = {};
 
 startButton.addEventListener('click', () => {
-    const numFloors = parseInt(numFloorsInput.value);
-    const numLifts = parseInt(numLiftsInput.value);
+    const numFloors = numFloorsInput.value;
+    const numLifts = numLiftsInput.value;
 
-    if (isNaN(numFloors) || isNaN(numLifts) || numFloors <= 0 || numLifts <= 0) {
-        alert('Please enter valid positive integers for Floors and Lifts');
-        return;
+    function isPositiveInteger(value) {
+        return Number.isInteger(Number(value)) && Number(value) > 0;
     }
 
-    initializeSimulation(numFloors, numLifts);
+    // Updated validation to check for floating numbers and exponent values
+    // if (Number.isFinite(numFloors) || Number.isFinite(value) || !Number.isInteger(value) || !isFinite(numLifts) || numFloors <= 0 || numLifts <= 0) {
+    //     alert('Please enter valid positive numbers for Floors and Lifts');
+    //     return;
+    // }
+
+    if (!isPositiveInteger(numFloors) || !isPositiveInteger(numLifts)) {
+        alert('Please enter valid positive integers for Floors and Lifts');
+        return ;
+    }
+
+    initializeSimulation(parseInt(numFloors), parseInt(numLifts));
 });
 
 function initializeSimulation(numFloors, numLifts) {

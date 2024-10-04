@@ -13,9 +13,9 @@
     <div class="form">
         <div class="inputs">
             <label for="numFloors">Number of Floors :</label>
-            <input type="number" id="numFloors" value="4" min="1">
+            <input type="number" id="numFloors" value="4" min="1" oninput="validity.valid||(value='');">
             <label for="numLifts">Number of Lifts :</label>
-            <input type="number" id="numLifts" value="3" min="1">
+            <input type="number" id="numLifts" value="3" min="1"  oninput="validity.valid||(value='');">
             <button id="startSimulation" class="submitButton">Start Simulation</button>
         </div>
     </div>
